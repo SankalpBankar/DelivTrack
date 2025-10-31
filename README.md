@@ -29,8 +29,8 @@ DelivTrack/
 Follow these steps to set up and track your order:
 ### 1️⃣ Clone the Repository 📥
 ```sh
-git clone https://github.com/SankalpBankar/DelivTracker.git
-cd DelivTracker
+git clone https://github.com/SankalpBankar/DelivTrack.git
+cd DelivTrack
 ```
 
 ### 2️⃣ Install Dependencies 📦
@@ -38,21 +38,23 @@ cd DelivTracker
 pip install -r requirements.txt
 ```
 
-
-### 3️⃣ Set Up Environment Variables 🔑
-Create a .env file in the root directory
-Add your API key:
+### 3️⃣ Run the Streamlit App 🚀
+Ensure you have all backend files and Streamlit app ready. Then run:
 ```sh
-GROQ_API_KEY=groq_api_key
+streamlit run app.py
 ```
 
-### 4️⃣ Load the LLM (LLaMA3.1) 🦙
-The code uses LangChain + Groq to load the model:
+## 🛠️ Troubleshooting 🚨
+
+### • Streamlit App not running
+If the command fails or you get ModuleNotFoundError.
+Ensure dependencies are installed and environment is active:
+1. Activate your environment
 ```sh
-groq_api_key=os.getenv("GROQ_API_KEY")
-llm = ChatGroq(
-    groq_api_key=groq_api_key,  
-    model_name="llama-3.1-8b-instant",
-    temperature=0.2        
-)
+source env/bin/activate
 ```
+2. Re-install all dependencies
+```sh
+pip install -r requirements.txt
+```
+
