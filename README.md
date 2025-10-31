@@ -48,6 +48,7 @@ Ensure you have all backend files and Streamlit app ready. Then run:
 ```sh
 streamlit run app.py
 ```
+Your browser will open the app at http://localhost:8501
 
 ## 🛠️ Troubleshooting 🚨
 
