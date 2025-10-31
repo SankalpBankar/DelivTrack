@@ -5,33 +5,34 @@ from scipy.spatial import cKDTree
 import matplotlib.pyplot as plt
 from logic import select_orders  # reuse your select_orders function
 
-st.set_page_config(page_title="RoutePath — Online Delivery Tracker", layout="wide")
+st.set_page_config(page_title="DelivTrack— Online Delivery Tracker🚚🗺️", layout="wide")
 
-st.title("RoutePath — Online Delivery Tracker")
+st.title("DelivTrack — Online Delivery Tracker🚚🗺️")
 st.markdown(
-    "Upload `train.csv` from Kaggle (or use the sample). "
+    "Upload `df_orders.csv` from train folder from Kaggle (or use the sample). "
     "Configure sample size and capacity, then run route optimization."
 )
 
-# ------------------------------
 # Sidebar controls
-# ------------------------------
+
 st.sidebar.header("Settings")
-uploaded_file = st.sidebar.file_uploader("Upload train.csv", type=["csv"])
-use_local = st.sidebar.checkbox("Use local train.csv if upload not provided", value=True)
+uploaded_file = st.sidebar.file_uploader("Upload df_orders.csv", type=["csv"])
+use_local = st.sidebar.checkbox("Use local df_orders.csv if upload not provided", value=True)
 sample_size = st.sidebar.slider("Sample size (for route simulation)", min_value=20, max_value=1000, value=200, step=10)
-max_capacity = st.sidebar.number_input("Max capacity (units — e.g., minutes)", value=10000.0, step=100.0)
+max_capacity = st.sidebar.number_input("Max capacity (units)", value=10000.0, step=100.0)
 run_button = st.sidebar.button("Run Route Optimization")
 
-# ------------------------------
 # Helper functions
-# ------------------------------
-@st.cache_data
+
+#@st.cache_data
+def load_local_dataframe():
+    return pd.read_csv("df_orders.csv")
+
 def load_dataframe(uploaded_file, use_local):
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file)
     elif use_local:
-        df = pd.read_csv("train.csv")
+        df = load_local_dataframe()
     else:
         df = None
     return df
@@ -139,13 +140,12 @@ def greedy_tsp_with_kdtree(order_ids, coords_array):
     route.append(route[0])
     return route, total_dist
 
-# ------------------------------
 # Main flow
-# ------------------------------
+
 df = load_dataframe(uploaded_file, use_local)
 
 if df is None:
-    st.info("Upload a CSV or enable 'Use local train.csv' with a local file present.")
+    st.info("Upload a CSV or enable 'Use local df_orders.csv' with a local file present.")
     st.stop()
 
 st.write("Columns:", df.columns.tolist())
@@ -201,7 +201,15 @@ if run_button:
             if i < 20:
                 ax.text(route_coords[i, 0], route_coords[i, 1] + 1.5, f"{i+1}", fontsize=8, color="red", ha="center")
 
-        ax.set_title("RoutePath: Delivery Route Visualization")
+             # Determine axis labels dynamically
+        if "latitude" in df.columns and "longitude" in df.columns:
+            x_label, y_label = "Longitude", "Latitude"
+        elif "lat" in df.columns and "lon" in df.columns:
+            x_label, y_label = "Lon", "Lat"
+        else:
+            x_label, y_label = "Generated X", "Generated Y"
+
+        ax.set_title("DelivTrack: Delivery Route Visualization🚚")
         ax.set_xlabel("X")
         ax.set_ylabel("Y")
         ax.legend()
@@ -210,6 +218,6 @@ if run_button:
 
 st.markdown("---")
 st.markdown(
-    "Hints: increase 'Sample size' for more accurate visualization (but higher memory/cpu), "
+    "💡Tips: Increase 'Sample size' for more accurate visualization (but higher Memory/CPU), "
     "or tune 'Max capacity' to select more/less orders."
 )
