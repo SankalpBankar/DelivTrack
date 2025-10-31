@@ -40,10 +40,10 @@ pip install -r requirements.txt
 
 ### 3️⃣ Download Dataset from Kaggle
 ```sh
-https://www.kaggle.com/datasets/bytadit/ecommerce-order-dataset?
+https://www.kaggle.com/datasets/bytadit/ecommerce-order-dataset
 ```
 
-### 3️⃣ Run the Streamlit App 🚀
+### 4️⃣ Run the Streamlit App 🚀
 Ensure you have all backend files and Streamlit app ready. Then run:
 ```sh
 streamlit run app.py
