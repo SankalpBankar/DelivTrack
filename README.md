@@ -64,3 +64,8 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
+## 💻⚙️Contributions
+### 1️⃣ Sankalp Bankar (A7-B1-17)
+### 2️⃣ Anish Makhija  (A7-B1-01)
+
+
